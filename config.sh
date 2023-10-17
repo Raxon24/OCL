@@ -3,13 +3,12 @@
 #! bin/ bash
 
 # create auto install 
-sudo apt update && apt upgrade -y
+sudo apt update && sudo apt upgrade -y
 sudo apt remove -y iptables-persistent
 sudo iptables -F
 cat <<EOF
-make sure the previous step was successful. All chains should show ACCEPT 
-
-can use ufw for firewall recomended
+--- make sure the previous step was successful. All chains should show ACCEPT ---- 
+---- can use ufw for firewall recomended ---
 EOF
 sudo iptables -L -n -v
 sleep 20
@@ -32,7 +31,7 @@ echo \
   sudo apt-get update
   sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
   sudo docker run hello-world
-  sudo apt auto clean && sudo apt autoremove
+  sudo apt autoclean && sudo apt autoremove
   sudo docker --version
   sudo docker ps
   sleep 5
