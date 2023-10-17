@@ -36,3 +36,11 @@ echo \
   sudo docker --version
   sudo docker ps
   rm config.sh
+  cat <<EOF
+  system is rebooted now
+
+  after reboot run command bellow
+  sudo apt autoclean && sudo apt autoremove
+  EOF
+  sleep 7
+  sudo reboot
