@@ -37,8 +37,8 @@ echo \
   sudo docker ps
   sleep 5
   cat <<"EOF"
-  system is rebooted now
-  after reboot run command bellow
+   ---- system is rebooted now ----
+    after reboot run command bellow
    ( sudo apt autoclean && sudo apt autoremove )
   EOF
   sleep 7
