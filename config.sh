@@ -6,10 +6,6 @@
 sudo apt update && sudo apt upgrade -y
 sudo apt remove -y iptables-persistent
 sudo iptables -F
-cat <<EOF
---- make sure the previous step was successful. All chains should show ACCEPT ---- 
----- can use ufw for firewall recomended ---
-EOF
 sudo iptables -L -n -v
 sleep 20
 sudo apt install -y software-properties-common nano git curl
@@ -35,10 +31,4 @@ echo \
   sudo docker --version
   sudo docker ps
   sleep 5
-  cat <<"EOF"
-   ---- system is rebooted now ----
-    after reboot run command bellow
-   ( sudo apt autoclean && sudo apt autoremove )
-  EOF
-  sleep 7
   sudo reboot
