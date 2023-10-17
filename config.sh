@@ -4,7 +4,7 @@
 
 # create auto install 
 sudo apt update && apt upgrade -y
-sudo apt remove iptables-persistent
+sudo apt remove -y iptables-persistent
 sudo iptables -F
 cat <<EOF
 make sure the previous step was successful. All chains should show ACCEPT 
@@ -17,7 +17,7 @@ sudo apt install -y software-properties-common nano git curl
 for pkg in docker.io docker-doc docker-compose podman-docker containerd runc; do sudo apt-get remove $pkg; done
 sudo apt-get update
 sudo apt-get install ca-certificates gnupg
-sudo apt-get install --install-recommends linux-generic-hwe-22.04
+sudo apt-get install -y --install-recommends linux-generic-hwe-22.04
 sudo install -m 0755 -d /etc/apt/keyrings
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
 sudo chmod a+r /etc/apt/keyrings/docker.gpg
