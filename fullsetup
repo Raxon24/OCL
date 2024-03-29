@@ -42,7 +42,7 @@ progress-bar() {
   clean_line
 }
 
-# test part
+# 
 # -----------
 echo -e "${GN}User run script ${RD} ---> ${WT}${BLD}${UL} $(whoami) ${CL} ${RD}<---${CL}"
 echo -e "${RD}${BLIK} WARNING ${YLW}${BLD}  You need be a root user for run this script no sudo users are allowed to run
@@ -130,9 +130,61 @@ if [[ "${prompt,,}" =~ ^(y|yes)$ ]]; then
 fi
 
 # create auto install 
-apt update && apt upgrade -y
-apt -y autoremove
+sudo apt update && sudo apt upgrade -y
+# sudo apt remove  iptables-persistent -y
+# sudo iptables -F
+# sudo iptables -L -n -v
+sudo apt update
+sudo apt install -y wget sudo shellcheck software-properties-common nano git git-core fonts-powerline curl ca-certificates gnupg iputils-ping dnsutils build-essential file neofetch lolcat figlet toilet duf htop btop zsh
+sudo apt update
+sudo apt install -y build-essential zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libssl-dev libreadline-dev libffi-dev wget
+sudo apt install -y python3 python3-pip
+sudo pip3 install --upgrade pip
+sudo apt install -y --install-recommends linux-generic-hwe-22.04
+sudo install -m 0755 -d /etc/apt/keyrings
+sudo apt update
+curl -s 'https://raw.githubusercontent.com/zerotier/ZeroTierOne/master/doc/contact%40zerotier.com.gpg' | gpg --import && \  
+if z=$(curl -s 'https://install.zerotier.com/' | gpg); then echo "$z" | sudo bash; fi
+curl -sSL https://pkgs.netbird.io/debian/public.key | sudo gpg --dearmor --output /usr/share/keyrings/netbird-archive-keyring.gpg
+echo 'deb [signed-by=/usr/share/keyrings/netbird-archive-keyring.gpg] https://pkgs.netbird.io/debian stable main' | sudo tee /etc/apt/sources.list.d/netbird.list
+sudo apt install -y netbird
+for pkg in docker.io docker-doc docker-compose podman-docker containerd runc; do sudo apt-get remove $pkg; done
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+sudo chmod a+r /etc/apt/keyrings/docker.gpg
+echo \
+  "deb [arch="$(dpkg --print-architecture)" signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+  "$(. /etc/os-release && echo "$VERSION_CODENAME")" stable" | \
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+  echo \
+  "deb [arch="$(dpkg --print-architecture)" signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+  "$(. /etc/os-release && echo "$VERSION_CODENAME")" stable" | \
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+  sudo apt-get update
+  sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+  sudo docker --version
+  sudo docker ps
+
+sleep 1
+sudo apt autoclean && sudo apt autoremove
+cd ~
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+sleep 5
+mv ~/.zshrc ~/.zshrc.bak
+wget https://raw.githubusercontent.com/Raxon24/OCL/main/.zshrc-root
+mv .zshrc-root .zshrc
 sleep 3
-cd ~ || "$@"
-dig @1.0.0.1
-ping cloudflare.com
+source ~/.zshrc
+sleep 10
+exit
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+mv ~/.zshrc ~/.zshrc.bak
+wget https://raw.githubusercontent.com/Raxon24/OCL/main/.zshrc-usr
+mv .zshrc-usr .zshrc
+source ~/.zshrc
+sleep 10
+sudo apt autoclean && sudo apt autoremove
+sudo reboot
