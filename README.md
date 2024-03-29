@@ -13,7 +13,10 @@ Oracle-Cloud
 
 # Full setup for ubuntu
 
-    sudo -i && cd ~ && bash -c "$(wget -qLO - https://raw.githubusercontent.com/Raxon24/OCL/main/fullsetup)"
+    sudo -i && cd ~     
+.
+      
+    bash -c "$(wget -qLO - https://raw.githubusercontent.com/Raxon24/OCL/main/fullsetup)"
 
 #### For user setup
 
