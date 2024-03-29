@@ -18,9 +18,13 @@ Oracle-Cloud
       
     bash -c "$(wget -qLO - https://raw.githubusercontent.com/Raxon24/OCL/main/fullsetup)"
 
-#### For user setup
+##### roor zsh config
+
+    zsh -c "$(wget -qLO - https://raw.githubusercontent.com/Raxon24/OCL/main/root-zsh_config)"
+
+### For user setup
 
     ZSH="$HOME/.oh-my-zsh" sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
- .   
+#### user zsh config   
 
-    cd ~ && bash -c "$(wget -qLO - https://raw.githubusercontent.com/Raxon24/OCL/main/usrsetup)"
+    cd ~ && zsh -c "$(wget -qLO - https://raw.githubusercontent.com/Raxon24/OCL/main/usrsetup)"
