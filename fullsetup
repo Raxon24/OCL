@@ -1,0 +1,138 @@
+  GNU nano 6.2                                                                                                                                                                                                            /home/ubuntu/demo.sh                                                                                                                                                                                                                     
+#!/bin/env bash
+
+if ! [ "$(id -u)" = 0 ]; then
+   echo "The script need to be run as root." >&2
+   exit 1
+fi
+
+if [ "$SUDO_USER" ]; then
+    export real_user=$SUDO_USER
+else
+    real_user=$(whoami)
+fi
+
+UL="\033[4m"
+BLIK="\033[5m"
+CL="\033[m"
+BLD="\033[1m"
+DM="\e[2m"
+WT="\033[97m"
+OR="\033[38;5;208m"
+YLW="\033[33m"
+RD="\033[38;5;9m"
+GN="\033[1;92m"
+#BL="\033[38;5;33m"
+
+# This is solid prosgres bar funtion
+progress-bar() {
+  local duration=${1}
+
+
+    already_done() { for ((done=0; done<elapsed; done++)); do printf "▇"; done }
+    remaining() { for ((remain=elapsed; remain<duration; remain++)); do printf " "; done }
+    percentage() { printf "| %s%%" $(( ((elapsed)*100)/(duration)*100/100 )); }
+    clean_line() { printf "\r"; }
+
+  for (( elapsed=1; elapsed<=duration; elapsed++ )); do
+      already_done; remaining; percentage
+      sleep 0.15
+      clean_line
+  done
+  clean_line
+}
+
+# test part
+# -----------
+echo -e "${GN}User run script ${RD} ---> ${WT}${BLD}${UL} $(whoami) ${CL} ${RD}<---${CL}"
+echo -e "${RD}${BLIK} WARNING ${YLW}${BLD}  You need be a root user for run this script no sudo users are allowed to run
+                  if not a root click ( y ) to exit and login as root${CL}"
+#read -r -p "Would you like exit to login as  root now ? ( if you are root hit enter ) <y/N> " prompt
+echo -e "${YLW}Would you like exit to login as  root now ? type y or  if you are root hit ${GN}${UL}ENTER${CL}" 
+read -r -p "Select Yes or No  <y/N> " prompt
+if [[ "${prompt,,}" =~ ^(y|yes)$ ]]; then
+    echo -e "${GN}Run ${WT}${DM}${BLD}${UL} sudo su && cd ~ ${CL}${GN} for switch to ${WT}${BLD}root${CL}"
+    exit 1
+fi
+
+# Start collecting systen OS
+echo -e "${GN}${BLD}From some basic information on your system, you appear to be running:${CL} "
+echo -e "${YLW}${BLD}"
+echo "      --  OS Name                $(cat /etc/*-release | grep -Po "(?<=^ID=).+" | sed 's/"//g')"
+echo "      --  Description            $(cat /etc/*-release | grep -E "PRETTY_NAME" | cut -d = -f 2 | tr -d '"')"
+echo "      --  OS Version release     $(cat /etc/*-release | grep -E "VERSION_ID" | cut -d = -f 2 | tr -d '"')"
+echo "      --  Code Name              $(cat /etc/*-release | grep -E "VERSION_CODENAME" | cut -d = -f 2 | tr -d '"')"
+echo -e "${CL}"
+echo -e "${WT}${BLD}-------------------------------------------------------${CL}"
+
+OUTPUT=$(cat /etc/*release)
+OS=$(cat /etc/*-release | grep -Po "(?<=^ID=).+" | sed 's/"//g')
+if echo "$OUTPUT" | grep -q "Ubuntu" ; then
+echo -e " ${GN}${BLD}supported OS ${OR}$OS ${GN}${BLD}Loading system configurations ${OR}${BLD}"; progress-bar 55
+echo -e "${CL}"
+              export  SERVER_OS="Ubuntu"
+
+else
+
+                echo -e "${RD}Unable to detect supported OS...${CL}"
+                echo -e "${WT}${BLD}This Install is supported on ${OR}${BLD}Ubuntu ${WT}${BLD}Distro Only ...${CL}"
+                exit 1
+fi
+
+if [[ "$(id -u)" -ne 0 || $(ps -o comm= -p $PPID) == "sudo" ]]; then
+uname -a
+              echo -e "\033[38;5;33mPlease run this script as\033[97m root.\033[m "
+              echo -e "\033[01;31mExiting...\033[m"
+              sleep 2
+              exit 
+fi
+
+clear
+echo -e "${OR}${BLD}"
+cat <<"EOF"
+
+               .-.
+         .-'``(   )
+      ,`\ \    `-`.               88                         88
+     /   \ '``-.   `              88                         88
+   .-.  ,       `___:    88   88  88,888,  88   88  ,88888, 88888  88   88
+  (   ) :        ___     88   88  88   88  88   88  88   88  88    88   88
+   `-`  `       ,   :    88   88  88   88  88   88  88   88  88    88   88
+     \   / ,..-`   ,     88   88  88   88  88   88  88   88  88    88   88
+      `./ /    .-.`      '88888'  '88888'  '88888'  88   88  '8888 '88888'
+         `-..-(   )
+               `-`
+
+EOF
+echo -e "${WT}${BLD}---------------------------------------------------------------------------${CL}"
+echo -e "${CL}${DM}${WT}Author:${CL} ${WT}(${LBL}${BLD}Rax${WT}) ${CL}${DM}${WT}From ${GN}${BLD}TELXEY"
+echo -e "${GN} Today is: ${WT} $(date) "
+echo -e "${CL}"
+echo -e "${RD}${BLD}"
+cat <<"EOF"
+    This script install basic tools that requires 
+    auto resboot on finished possible data loss 
+    Make sure save you data, before to continue
+EOF
+echo -e "${CL}"
+echo -e "${GN}${BLD}Do you wish to install full custom tools now"
+echo -e "${WT}For continew press --> ${GN}${BLD} 1 ${WT}${BLD} or${CL}  ${WT} For cancel press --> ${RD}${BLD} 2 ${CL}"
+select yn in "Yes" "No"; do
+    case $yn in
+        Yes ) "$@"; break;;
+        No ) echo -e "${RD}Instalations canceled${CL}";  exit;;
+    esac
+done
+
+read -r -p "Would you like to add set root Password now ?( If no hit enter ) <y/N> " prompt
+if [[ "${prompt,,}" =~ ^(y|yes)$ ]]; then
+  sudo passwd root
+fi
+
+# create auto install 
+apt update && apt upgrade -y
+apt -y autoremove
+sleep 3
+cd ~ || "$@"
+dig @1.0.0.1
+ping cloudflare.com
