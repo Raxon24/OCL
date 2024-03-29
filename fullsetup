@@ -1,4 +1,4 @@
-  GNU nano 6.2                                                                                                                                                                                                            /home/ubuntu/demo.sh                                                                                                                                                                                                                     
+                                                                                                                                                                                                                     
 #!/bin/env bash
 
 if ! [ "$(id -u)" = 0 ]; then
