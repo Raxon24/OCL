@@ -167,14 +167,5 @@ echo \
 sleep 1
 sudo apt autoclean && sudo apt autoremove
 cd ~
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
-git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
-sleep 5
-mv ~/.zshrc ~/.zshrc.bak
-wget https://raw.githubusercontent.com/Raxon24/OCL/main/.zshrc-root
-mv .zshrc-root .zshrc
-sleep 3
-source ~/.zshrc
-sleep 10
-sudo reboot
+ZSH="$HOME/.oh-my-zsh" sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+exit 1
