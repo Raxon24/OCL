@@ -20,4 +20,7 @@ Oracle-Cloud
 
 #### For user setup
 
+    ZSH="$HOME/.oh-my-zsh" sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+ .   
+
     cd ~ && bash -c "$(wget -qLO - https://raw.githubusercontent.com/Raxon24/OCL/main/usrsetup)"
