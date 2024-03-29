@@ -20,4 +20,4 @@ Oracle-Cloud
 
 #### For user setup
 
-    cd ~ && bash -c "(wget -qLO - https://raw.githubusercontent.com/Raxon24/OCL/main/usrsetup)"
+    cd ~ && bash -c "$(wget -qLO - https://raw.githubusercontent.com/Raxon24/OCL/main/usrsetup)"
