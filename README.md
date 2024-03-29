@@ -18,7 +18,7 @@ Oracle-Cloud
       
     bash -c "$(wget -qLO - https://raw.githubusercontent.com/Raxon24/OCL/main/fullsetup)"
 
-##### roor zsh config
+##### root zsh config
 
     zsh -c "$(wget -qLO - https://raw.githubusercontent.com/Raxon24/OCL/main/root-zsh_config)"
 
